@@ -1,1 +1,7 @@
 BUILD/
+*.pyc
+*.scvd
+JLinkLog.txt
+JLinkSettings.ini
+DebugConfig/
+*.maior
