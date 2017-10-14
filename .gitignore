@@ -5,3 +5,4 @@ JLinkLog.txt
 JLinkSettings.ini
 DebugConfig/
 *.maior
+/Debug/
