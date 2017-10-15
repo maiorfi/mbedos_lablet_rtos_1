@@ -5,6 +5,7 @@
         "list": "cpp",
         "vector": "cpp",
         "xstring": "cpp",
-        "queue": "cpp"
+        "queue": "cpp",
+        "istream": "cpp"
     }
 }

@@ -16,8 +16,11 @@ static Serial s_debug_serial_port(SERIAL_TX, SERIAL_RX);
 #endif
 
 #if (DEBUG_CHANNEL_RTT)
-#include "SEGGER_SYSVIEW.h"
 #include "SEGGER_RTT.h"
+#define RTT_TID_LOG 0
+#define RTT_TID_INFO 1
+static Thread s_thread_rtt_input;
+static EventQueue s_eq_rtt_input;
 #endif
 
 static std::vector<DigitalOut *> s_leds;
@@ -27,10 +30,14 @@ static DigitalOut led2(LED2);
 static DigitalOut led3(LED6);
 static DigitalOut led4(LED5);
 
+static DigitalIn btn(BUTTON1);
+
 static Thread s_thread_blink;
 static Thread s_thread_recurrent_1;
+static Thread s_thread_button_poll;
 
 static EventQueue s_eq_recurrent_1;
+static EventQueue s_eq_button_poll;
 
 static Timer s_timer_1;
 
@@ -39,20 +46,37 @@ int led2_state;
 int led3_state;
 int led4_state;
 
+int latest_button_state;
+
+void event_proc_button_poll()
+{
+    int state = btn.read();
+
+    if (state != latest_button_state)
+    {
+        SEGGER_RTT_SetTerminal(RTT_TID_INFO);
+        SEGGER_RTT_printf(0, "%s[RTT DEBUG CHANNEL] Stato pulsante : %s %s\n",
+                          RTT_CTRL_TEXT_BRIGHT_MAGENTA,
+                          state ? "ON" : "OFF",
+                          RTT_CTRL_RESET);
+
+        latest_button_state = state;
+    }
+}
+
 void event_proc_recurrent_1(char c)
 {
 #if (DEBUG_CHANNEL_SWO)
-    swo.printf("[event_proc_recurrent_1 - SWO] Elapsed %d ms\n", s_timer_1.read_ms());
+    swo.printf("[event_proc_recurrent_1 - SWO] Elapsed %d ms (%c)\n", s_timer_1.read_ms(), c);
 #endif
 
 #if (DEBUG_CHANNEL_SERIAL)
-    printf("[event_proc_recurrent_1 - SERIAL] Elapsed %d ms\n", s_timer_1.read_ms());
+    printf("[event_proc_recurrent_1 - SERIAL] Elapsed %d ms (%c)\n", s_timer_1.read_ms(), c);
 #endif
 
 #if (DEBUG_CHANNEL_RTT)
-    char buf[128];
-    sprintf(buf, "[event_proc_recurrent_1 - RTT] Elapsed %d ms\n", s_timer_1.read_ms());
-    SEGGER_RTT_WriteString(0, buf);
+    SEGGER_RTT_SetTerminal(RTT_TID_LOG);
+    SEGGER_RTT_printf(0, "[event_proc_recurrent_1 - RTT] Elapsed %d ms (%c)\n", s_timer_1.read_ms(), c);
 #endif
 }
 
@@ -64,12 +88,28 @@ void thread_proc_blink(std::vector<DigitalOut *> *pleds)
         {
             (*it)->write(!((*it)->read()));
 
-            led1_state=(*pleds)[0]->read();
-            led2_state=(*pleds)[1]->read();
-            led3_state=(*pleds)[2]->read();
-            led4_state=(*pleds)[3]->read();
+            led1_state = (*pleds)[0]->read();
+            led2_state = (*pleds)[1]->read();
+            led3_state = (*pleds)[2]->read();
+            led4_state = (*pleds)[3]->read();
 
             wait_ms(125);
+        }
+    }
+}
+
+void event_proc_rtt_input()
+{
+    if (SEGGER_RTT_HasKey())
+    {
+        int c = SEGGER_RTT_GetKey();
+
+        switch (c)
+        {
+            case 'r':
+            case 'R':
+                NVIC_SystemReset();
+                break;
         }
     }
 }
@@ -86,8 +126,14 @@ int main()
 #endif
 
 #if (DEBUG_CHANNEL_RTT)
-    SEGGER_SYSVIEW_Conf();
-    SEGGER_RTT_WriteString(0,"[RTT DEBUG CHANNEL] Lablet RTOS Demo #1 main()...\n");
+    SEGGER_RTT_ConfigUpBuffer(0, NULL, NULL, 0, SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL);
+
+    SEGGER_RTT_SetTerminal(RTT_TID_INFO);
+    SEGGER_RTT_WriteString(0, RTT_CTRL_CLEAR);
+    SEGGER_RTT_printf(0, "%s[RTT DEBUG CHANNEL] Lablet RTOS Demo #1 main()...%s\n", RTT_CTRL_TEXT_BRIGHT_GREEN, RTT_CTRL_RESET);
+
+    SEGGER_RTT_SetTerminal(RTT_TID_LOG);
+    SEGGER_RTT_WriteString(0, RTT_CTRL_CLEAR);
 #endif
 
     s_leds.push_back(&led1);
@@ -96,9 +142,18 @@ int main()
     s_leds.push_back(&led4);
 
     s_eq_recurrent_1.call_every(1000, event_proc_recurrent_1, '.');
+    s_eq_button_poll.call_every(10, event_proc_button_poll);
 
     s_thread_blink.start(callback(thread_proc_blink, &s_leds));
 
     s_timer_1.start();
     s_thread_recurrent_1.start(callback(&s_eq_recurrent_1, &EventQueue::dispatch_forever));
+
+    latest_button_state = btn.read();
+    s_thread_button_poll.start(callback(&s_eq_button_poll, &EventQueue::dispatch_forever));
+
+#if (DEBUG_CHANNEL_RTT)
+    s_eq_rtt_input.call_every(1000, event_proc_rtt_input);
+    s_thread_rtt_input.start(callback(&s_eq_rtt_input, &EventQueue::dispatch_forever));
+#endif
 }
