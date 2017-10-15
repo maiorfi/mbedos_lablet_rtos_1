@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<JScopeProject>
+    <FileVersion major="1" minor="1" />
+    <Project>
+        <Configuration>
+            <JLink>
+                <Options IsRTTSession="0" IsRTTWithTimeStamp="1" SamplingPeriod="100" Connection="1" SerialNo="0" IP="" TargetDevice="unspecified" TargetInterface="SWD" InterfaceSpeed="8000" />
+            </JLink>
+            <ElfFile Name="D:\Progetti\Lab\mBed\lablet_rtos_1\BUILD\DISCO_F407VG\GCC_ARM\lablet_rtos_1.elf" />
+            <DataFile Name="" />
+            <RawFile Name="" />
+            <Scope>
+                <Options TimeResolutionUs="500000" />
+            </Scope>
+        </Configuration>
+        <Windows>
+            <Graph Show="1" />
+            <Watch Show="0" />
+        </Windows>
+        <SelectedSymbols>
+            <Symbol>
+                <Options Name="led1_state" Address="0x20000FB0" Type="int" TypeID="12" Size="4" GraphColorRed="255" GraphColorGreen="215" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="4" ShowInGraph="1" YOffset="100" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
+            </Symbol>
+            <Symbol>
+                <Options Name="led2_state" Address="0x20000FB4" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="255" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="8" ShowInGraph="1" YOffset="300" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
+            </Symbol>
+            <Symbol>
+                <Options Name="led3_state" Address="0x20000FB8" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="0" GraphColorBlue="255" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="12" ShowInGraph="1" YOffset="500" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
+            </Symbol>
+            <Symbol>
+                <Options Name="led4_state" Address="0x20000FBC" Type="int" TypeID="12" Size="4" GraphColorRed="160" GraphColorGreen="32" GraphColorBlue="240" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="16" ShowInGraph="1" YOffset="700" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
+            </Symbol>
+        </SelectedSymbols>
+    </Project>
+</JScopeProject>
