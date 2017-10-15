@@ -129,11 +129,9 @@ int main()
     SEGGER_RTT_ConfigUpBuffer(0, NULL, NULL, 0, SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL);
 
     SEGGER_RTT_SetTerminal(RTT_TID_INFO);
-    SEGGER_RTT_WriteString(0, RTT_CTRL_CLEAR);
     SEGGER_RTT_printf(0, "%s[RTT DEBUG CHANNEL] Lablet RTOS Demo #1 main()...%s\n", RTT_CTRL_TEXT_BRIGHT_GREEN, RTT_CTRL_RESET);
 
     SEGGER_RTT_SetTerminal(RTT_TID_LOG);
-    SEGGER_RTT_WriteString(0, RTT_CTRL_CLEAR);
 #endif
 
     s_leds.push_back(&led1);
