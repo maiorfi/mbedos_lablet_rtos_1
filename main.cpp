@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#define DEBUG_CHANNEL_SERIAL 1
-#define DEBUG_CHANNEL_SWO 1
+#define DEBUG_CHANNEL_SERIAL 0
+#define DEBUG_CHANNEL_SWO 0
 #define DEBUG_CHANNEL_RTT 1
 
 #if (DEBUG_CHANNEL_SWO)
