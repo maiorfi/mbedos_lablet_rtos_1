@@ -19,16 +19,19 @@
         </Windows>
         <SelectedSymbols>
             <Symbol>
-                <Options Name="led1_state" Address="0x20000FB0" Type="int" TypeID="12" Size="4" GraphColorRed="255" GraphColorGreen="215" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="4" ShowInGraph="1" YOffset="100" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
+                <Options Name="led1_state" Address="0x200011B8" Type="int" TypeID="12" Size="4" GraphColorRed="255" GraphColorGreen="215" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="4" ShowInGraph="1" YOffset="400" IsAutoConfig="1" YResolution="1" MaxValue="4" File=".\main.cpp" Scope="0" DrawStyle="0" />
             </Symbol>
             <Symbol>
-                <Options Name="led2_state" Address="0x20000FB4" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="255" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="8" ShowInGraph="1" YOffset="300" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
+                <Options Name="led2_state" Address="0x200011BC" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="255" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="8" ShowInGraph="1" YOffset="500" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
             </Symbol>
             <Symbol>
-                <Options Name="led3_state" Address="0x20000FB8" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="0" GraphColorBlue="255" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="12" ShowInGraph="1" YOffset="500" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
+                <Options Name="led3_state" Address="0x200011C0" Type="int" TypeID="12" Size="4" GraphColorRed="0" GraphColorGreen="0" GraphColorBlue="255" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="12" ShowInGraph="1" YOffset="600" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
             </Symbol>
             <Symbol>
-                <Options Name="led4_state" Address="0x20000FBC" Type="int" TypeID="12" Size="4" GraphColorRed="160" GraphColorGreen="32" GraphColorBlue="240" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="16" ShowInGraph="1" YOffset="700" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
+                <Options Name="led4_state" Address="0x200011C4" Type="int" TypeID="12" Size="4" GraphColorRed="160" GraphColorGreen="32" GraphColorBlue="240" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="16" ShowInGraph="1" YOffset="700" IsAutoConfig="1" YResolution="1" MaxValue="2" File=".\main.cpp" Scope="0" DrawStyle="0" />
+            </Symbol>
+            <Symbol>
+                <Options Name="latest_button_state" Address="0x200011C8" Type="int" TypeID="12" Size="4" GraphColorRed="255" GraphColorGreen="0" GraphColorBlue="0" YMinSampled="0" YMaxSampled="1" YAvgSampled="0" Offset="20" ShowInGraph="1" YOffset="300" IsAutoConfig="1" YResolution="1" MaxValue="3" File=".\main.cpp" Scope="0" DrawStyle="0" />
             </Symbol>
         </SelectedSymbols>
     </Project>

@@ -23,7 +23,7 @@ static Thread s_thread_rtt_input;
 static EventQueue s_eq_rtt_input;
 #endif
 
-static std::vector<DigitalOut *> s_leds;
+static std::vector<DigitalOut> s_leds;
 
 static DigitalOut led1(LED1);
 static DigitalOut led2(LED2);
@@ -54,11 +54,13 @@ void event_proc_button_poll()
 
     if (state != latest_button_state)
     {
+        #if (DEBUG_CHANNEL_RTT)
         SEGGER_RTT_SetTerminal(RTT_TID_INFO);
         SEGGER_RTT_printf(0, "%s[RTT DEBUG CHANNEL] Stato pulsante : %s %s\n",
                           RTT_CTRL_TEXT_BRIGHT_MAGENTA,
                           state ? "ON" : "OFF",
                           RTT_CTRL_RESET);
+        #endif
 
         latest_button_state = state;
     }
@@ -80,24 +82,25 @@ void event_proc_recurrent_1(char c)
 #endif
 }
 
-void thread_proc_blink(std::vector<DigitalOut *> *pleds)
+void thread_proc_blink(std::vector<DigitalOut>* pleds)
 {
     while (true)
     {
-        for (std::vector<DigitalOut *>::iterator it = pleds->begin(); it != pleds->end(); it++)
+        for (std::vector<DigitalOut>::iterator it = pleds->begin(); it != pleds->end(); it++)
         {
-            (*it)->write(!((*it)->read()));
+            it->write(!(it->read()));
 
-            led1_state = (*pleds)[0]->read();
-            led2_state = (*pleds)[1]->read();
-            led3_state = (*pleds)[2]->read();
-            led4_state = (*pleds)[3]->read();
+            led1_state = ((*pleds)[0]).read();
+            led2_state = ((*pleds)[1]).read();
+            led3_state = ((*pleds)[2]).read();
+            led4_state = ((*pleds)[3]).read();
 
             wait_ms(125);
         }
     }
 }
 
+#if (DEBUG_CHANNEL_RTT)
 void event_proc_rtt_input()
 {
     if (SEGGER_RTT_HasKey())
@@ -113,6 +116,7 @@ void event_proc_rtt_input()
         }
     }
 }
+#endif
 
 int main()
 {
@@ -134,10 +138,10 @@ int main()
     SEGGER_RTT_SetTerminal(RTT_TID_LOG);
 #endif
 
-    s_leds.push_back(&led1);
-    s_leds.push_back(&led2);
-    s_leds.push_back(&led3);
-    s_leds.push_back(&led4);
+    s_leds.push_back(led1);
+    s_leds.push_back(led2);
+    s_leds.push_back(led3);
+    s_leds.push_back(led4);
 
     s_eq_recurrent_1.call_every(1000, event_proc_recurrent_1, '.');
     s_eq_button_poll.call_every(10, event_proc_button_poll);

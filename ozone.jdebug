@@ -15,9 +15,8 @@ void OnProjectLoad (void) {
   Project.SetDevice ("STM32F407VG");
   Project.SetHostIF ("USB", "");
   Project.SetTargetIF ("SWD");
-  Project.SetTIFSpeed ("20 MHz");
-  Project.SetTraceSource ("SWO");
-  Project.ConfigSWO ("auto", "auto");
+  Project.SetTIFSpeed ("auto");
+  Project.SetTraceSource ("None");
   Project.AddSvdFile ("Cortex-M4F.svd");
   Project.AddSvdFile ("D:/SEGGER/Ozone V2.50c/Config/Peripherals/STM32F407IG.svd");
   //
