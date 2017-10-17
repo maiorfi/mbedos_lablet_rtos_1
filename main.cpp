@@ -3,8 +3,8 @@
 #include <vector>
 
 #define DEBUG_CHANNEL_SERIAL 0
-#define DEBUG_CHANNEL_SWO 0
-#define DEBUG_CHANNEL_RTT 1
+#define DEBUG_CHANNEL_SWO 1
+#define DEBUG_CHANNEL_RTT 0
 
 #if (DEBUG_CHANNEL_SWO)
 #include "SWO.h"
@@ -27,8 +27,8 @@ static std::vector<DigitalOut> s_leds;
 
 static DigitalOut led1(LED1);
 static DigitalOut led2(LED2);
-static DigitalOut led3(LED6);
-static DigitalOut led4(LED5);
+static DigitalOut led3(LED3);
+static DigitalOut led4(LED4);
 
 static DigitalIn btn(BUTTON1);
 
@@ -95,7 +95,7 @@ void thread_proc_blink(std::vector<DigitalOut>* pleds)
             led3_state = ((*pleds)[2]).read();
             led4_state = ((*pleds)[3]).read();
 
-            wait_ms(125);
+            wait_ms(100);
         }
     }
 }
@@ -130,8 +130,6 @@ int main()
 #endif
 
 #if (DEBUG_CHANNEL_RTT)
-    SEGGER_RTT_ConfigUpBuffer(0, NULL, NULL, 0, SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL);
-
     SEGGER_RTT_SetTerminal(RTT_TID_INFO);
     SEGGER_RTT_printf(0, "%s[RTT DEBUG CHANNEL] Lablet RTOS Demo #1 main()...%s\n", RTT_CTRL_TEXT_BRIGHT_GREEN, RTT_CTRL_RESET);
 
